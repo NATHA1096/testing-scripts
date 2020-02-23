@@ -20,7 +20,7 @@ describe('Habitica web login', () => {
         cy.get('#passwordInput').click().type('password');
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.get('.error[data-v-7d0d32a2]').should('be.visible');
-        cy.get('.error').first().screenshot('genericError', { padding: 10 });
+        cy.get('.notifications-top-pos-normal').first().screenshot('loginGenericError', { padding: 10 });
     });
 
     it('Complete form without username. Username missing', ()=> {
@@ -29,7 +29,7 @@ describe('Habitica web login', () => {
         cy.get('#passwordInput').click().type('password');
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.contains(missingUsername);
-        cy.get('.error').first().screenshot('usernameMissing', { padding: 10 })
+        cy.get('.notifications-top-pos-normal').first().screenshot('loginUsernameMissing', { padding: 10 })
     });
     
     it('Complete form without password. Password missing', ()=> {
@@ -38,7 +38,7 @@ describe('Habitica web login', () => {
         cy.get('#usernameInput').click().type('cuentafalsa@nada.com');
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.contains(missingPassword);
-        cy.get('.error').first().screenshot('passwordMissing', { padding: 10 });
+        cy.get('.notifications-top-pos-normal').first().screenshot('LoginPasswordMissing', { padding: 10 });
     });
 
     /* Prueba exitosa */
