@@ -2,11 +2,11 @@ describe('Habitica Web - Registro', function() {
     it('Registrarse, crear avatar y añadir intereses', function() {
         cy.visit('https://habitica.com')
 	
-        cy.get('.form').find('input[id="usernameInput"]').click().type("test_habitica_web")
-        cy.get('.form').find('input[type="email"]').click().type("test_exitosa@example.com")
+        cy.get('.form').find('input[id="usernameInput"]').click().type("test_habitica_web1")
+        cy.get('.form').find('input[type="email"]').click().type("test_exitosa1@example.com")
         cy.get('.form').find('input[type="password"]').first().click().type("PruebaExitosa.01")
         cy.get('.form').find('input[type="password"]').last().click().type("PruebaExitosa.01")
-        cy.get('.form').contains('Sign Up').click()
+        cy.get('.form').contains('Sign Up').click({force: true})
         cy.wait(7000);
         cy.contains('Get Started!').click()
         var i;
