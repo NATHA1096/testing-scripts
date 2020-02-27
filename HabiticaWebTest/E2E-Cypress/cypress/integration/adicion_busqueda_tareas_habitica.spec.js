@@ -3,14 +3,14 @@ describe('Habitica añadir tareas', function() {
     it('Visitar habitica, añadir distintas tareas y ejecutar test de edicion de cada una, por medio de busqueda', function() {
       cy.visit('https://habitica.com/')
 	  cy.wait(3000)
-      cy.contains('Iniciar').click()
+      cy.contains('Login').click()
 	  cy.wait(2000)
       //Lineas nuevas  
       cy.get('#usernameInput.form-control').click().type("jmauricio")
 	  cy.wait(2000)
 	  cy.get('#passwordInput.form-control').click().type("jmauricio0101")
 	  cy.wait(2000)
-      cy.get('button').contains('Iniciar sesión').click()
+      cy.get('button').contains('Login').click()
 	  cy.wait(3000)
 	  cy
 		.get('textarea')
@@ -61,7 +61,7 @@ function buscarTarea(titulo, nuevoTitulo) {
 		cy.get('input').eq(0).click().type(nuevoTitulo)
 		cy.wait(2000)
 	})
-	cy.get('button').contains('Guardar').click()
+	cy.get('button').contains('Save').click()
 	cy.wait(2000)
 	cy.get('input').eq(0).click().clear()
 }
