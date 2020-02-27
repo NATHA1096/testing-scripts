@@ -51,7 +51,7 @@ function buscarTarea(titulo, nuevoTitulo) {
 	cy.contains(titulo).click()
 	if(titulo != 'Tomar un par de cervezas'){
 		cy.wait(2000)
-		cy.contains('Intermedia').click()
+		cy.contains('Medium').click()
 	}
 	
 	cy.get('#task-modal').within(() => {
