@@ -1,4 +1,3 @@
-
 describe('Habitica añadir tareas', function() {
     it('Visitar habitica, añadir distintas tareas y ejecutar test de edicion de cada una, por medio de busqueda', function() {
       cy.visit('https://habitica.com/')
@@ -6,12 +5,12 @@ describe('Habitica añadir tareas', function() {
       cy.contains('Login').click()
 	  cy.wait(2000)
       //Lineas nuevas  
-      cy.get('#usernameInput.form-control').click().type("jmauricio")
+      cy.get('#usernameInput.form-control').click().type("amespinosa11")
 	  cy.wait(2000)
-	  cy.get('#passwordInput.form-control').click().type("jmauricio0101")
+	  cy.get('#passwordInput.form-control').click().type("Cypress123*")
 	  cy.wait(2000)
       cy.get('button').contains('Login').click()
-	  cy.wait(3000)
+	  cy.wait(5000)
 	  cy
 		.get('textarea')
 		.each(($el, index, $list) => {
@@ -19,51 +18,57 @@ describe('Habitica añadir tareas', function() {
 			
 			switch (index) {
 				case 0:
-				cy.wrap($el).click().type("Leer 30 min")
-				cy.wrap($el).click().type('{enter}')
+				cy.wrap($el).click({force: true}).type("Leer 30 min", {force: true})
+				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
+				cy.get('#app').screenshot()
 				break;
 				case 1:
-				cy.wrap($el).click().type("Desayunar 7AM")
-				cy.wrap($el).click().type('{enter}')
+				cy.wrap($el).click({force: true}).type("Desayunar 7AM", {force: true})
+				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
+				cy.get('#app').screenshot()
 				break;
 				case 2:
-				cy.wrap($el).click().type("Hacer aseo")
-				cy.wrap($el).click().type('{enter}')
+				cy.wrap($el).click({force: true}).type("Hacer aseo", {force: true})
+				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
+				cy.get('#app').screenshot()
 				break;
 				case 3:
-				cy.wrap($el).click().type("Tomar un par de cervezas")
-				cy.wrap($el).click().type('{enter}')
+				cy.wrap($el).click({force: true}).type("Tomar un par de cervezas", {force: true})
+				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
+				cy.get('#app').screenshot()
 				break;
 				default:
 				break;
 			}
 	})
-	buscarTarea('Leer 30 min','Leer 60 min')
-	buscarTarea('Desayunar 7AM','Desayunar 9AM')
-	buscarTarea('Hacer aseo','Cocinar')
-	buscarTarea('Tomar un par de cervezas','Comer helado de chocolate')
+	buscarYeditarTarea('Leer 30 min','Leer 60 min')
+	buscarYeditarTarea('Desayunar 7AM','Desayunar 9AM')
+	buscarYeditarTarea('Hacer aseo','Cocinar')
+	buscarYeditarTarea('Tomar un par de cervezas','Comer helado de chocolate')	
     })
 })
 
-function buscarTarea(titulo, nuevoTitulo) {
-	cy.get('input').eq(0).click().type(titulo)
+function buscarYeditarTarea(titulo, nuevoTitulo) {
+	cy.get('input').eq(0).click({force: true}).type(titulo, {force: true})
 	cy.wait(2000)
-	cy.contains(titulo).click()
+	cy.screenshot()
+	cy.contains(titulo).click({force: true})
 	if(titulo != 'Tomar un par de cervezas'){
-		cy.wait(2000)
-		cy.contains('Medium').click()
-	}
-	
+		cy.wait(2000)		
+		cy.contains('Medium').click({force: true})
+		cy.get('.modal').screenshot();
+	}	
 	cy.get('#task-modal').within(() => {
 		cy.wait(2000)
-		cy.get('input').eq(0).click().clear() // Only yield inputs within form
+		cy.get('input').eq(0).click({force: true}).clear({force: true}) // Only yield inputs within form
 		cy.wait(2000)
-		cy.get('input').eq(0).click().type(nuevoTitulo)
+		cy.get('input').eq(0).click({force: true}).type(nuevoTitulo)
 		cy.wait(2000)
 	})
-	cy.get('button').contains('Save').click()
+	cy.get('.modal').screenshot();
+	cy.get('button').contains('Save').click({force: true})
 	cy.wait(2000)
-	cy.get('input').eq(0).click().clear()
+	cy.get('input').eq(0).click({force: true}).clear({force: true})
 }
 
 /*function add (a, b) {

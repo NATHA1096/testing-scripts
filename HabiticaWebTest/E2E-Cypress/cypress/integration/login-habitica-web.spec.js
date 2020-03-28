@@ -8,7 +8,7 @@ const missingPassword = 'Missing password.';
 
 describe('Habitica web login', () => {
 
-    before( () => {
+    beforeEach( () => {
         cy.visit('https://habitica.com/login');
     });
 
@@ -20,39 +20,34 @@ describe('Habitica web login', () => {
         cy.get('#passwordInput').click().type('password');
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.get('.error[data-v-7d0d32a2]').should('be.visible');
-        cy.get('.notifications-top-pos-normal').first().screenshot('loginGenericError', { padding: 10 });
+        cy.get('.form-wrapper').first().screenshot('loginGenericError');
     });
 
     it('Complete form without username. Username missing', ()=> {
         // Llenar form con datos de login
-        cy.get('#usernameInput').clear();
         cy.get('#passwordInput').click().type('password');
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.contains(missingUsername);
-        cy.get('.notifications-top-pos-normal').first().screenshot('loginUsernameMissing', { padding: 10 })
+        cy.get('.form-wrapper').first().screenshot('loginUsernameMissing')
     });
     
     it('Complete form without password. Password missing', ()=> {
         // Llenar form con datos de login
-        cy.get('#passwordInput').clear();
         cy.get('#usernameInput').click().type('cuentafalsa@nada.com');
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.contains(missingPassword);
-        cy.get('.notifications-top-pos-normal').first().screenshot('LoginPasswordMissing', { padding: 10 });
+        cy.get('.form-wrapper').first().screenshot('LoginPasswordMissing');
     });
 
     /* Prueba exitosa */
     it('Complete form and redirect to dashboard', ()=> {
         // Llenar form con datos de login
-        cy.get('#passwordInput').clear();
-        cy.get('#usernameInput').clear();
-
         cy.get('#usernameInput').click().type('amespinosa11');
         cy.get('#passwordInput').click().type('Cypress123*');
 
         cy.get('#login-form').find('button[type="submit"]').click();
 
         cy.contains('Tasks');
-        cy.get('.member-details').first().screenshot('loginSuccess', { padding: 10 })
+        cy.get('.container-fluid').first().screenshot('loginSuccess')
     });
 })
