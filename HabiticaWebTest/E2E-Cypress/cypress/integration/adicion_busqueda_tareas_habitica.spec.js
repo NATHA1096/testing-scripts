@@ -20,22 +20,22 @@ describe('Habitica añadir tareas', function() {
 				case 0:
 				cy.wrap($el).click({force: true}).type("Leer 30 min", {force: true})
 				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
-				cy.get('#app').screenshot()
+				cy.get('#app').screenshot('agregarHabito')
 				break;
 				case 1:
 				cy.wrap($el).click({force: true}).type("Desayunar 7AM", {force: true})
 				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
-				cy.get('#app').screenshot()
+				cy.get('#app').screenshot('agregarDiaria')
 				break;
 				case 2:
 				cy.wrap($el).click({force: true}).type("Hacer aseo", {force: true})
 				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
-				cy.get('#app').screenshot()
+				cy.get('#app').screenshot('agregarPendiente')
 				break;
 				case 3:
 				cy.wrap($el).click({force: true}).type("Tomar un par de cervezas", {force: true})
 				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
-				cy.get('#app').screenshot()
+				cy.get('#app').screenshot('agregarRecompensa')
 				break;
 				default:
 				break;
@@ -44,19 +44,24 @@ describe('Habitica añadir tareas', function() {
 	buscarYeditarTarea('Leer 30 min','Leer 60 min')
 	buscarYeditarTarea('Desayunar 7AM','Desayunar 9AM')
 	buscarYeditarTarea('Hacer aseo','Cocinar')
-	buscarYeditarTarea('Tomar un par de cervezas','Comer helado de chocolate')	
+	buscarYeditarTarea('Tomar un par de cervezas','Comer helado de chocolate')
+
+	eliminarTarea('Leer 60 min')
+    eliminarTarea('Desayunar 9AM')
+    eliminarTarea('Cocinar')
+    eliminarTarea('Comer helado de chocolate')
     })
 })
 
 function buscarYeditarTarea(titulo, nuevoTitulo) {
 	cy.get('input').eq(0).click({force: true}).type(titulo, {force: true})
 	cy.wait(2000)
-	cy.screenshot()
+	cy.screenshot('buscar'+titulo)
 	cy.contains(titulo).click({force: true})
 	if(titulo != 'Tomar un par de cervezas'){
 		cy.wait(2000)		
 		cy.contains('Medium').click({force: true})
-		cy.get('.modal').screenshot();
+		cy.get('.modal').screenshot('modal'+titulo);
 	}	
 	cy.get('#task-modal').within(() => {
 		cy.wait(2000)
@@ -65,10 +70,17 @@ function buscarYeditarTarea(titulo, nuevoTitulo) {
 		cy.get('input').eq(0).click({force: true}).type(nuevoTitulo)
 		cy.wait(2000)
 	})
-	cy.get('.modal').screenshot();
+	cy.get('.modal').screenshot('editar'+nuevoTitulo);
 	cy.get('button').contains('Save').click({force: true})
 	cy.wait(2000)
 	cy.get('input').eq(0).click({force: true}).clear({force: true})
+}
+
+function eliminarTarea(titulo) {    
+    cy.visit('https://habitica.com/')
+    cy.contains(titulo).click({force: true})
+    cy.wait(2000)
+    cy.get('.delete-task-btn').click({force: true})
 }
 
 /*function add (a, b) {

@@ -46,7 +46,7 @@ describe('Habitica web login', () => {
         cy.get('#passwordInput').click().type('Cypress123*');
 
         cy.get('#login-form').find('button[type="submit"]').click();
-
+        cy.wait(5000)
         cy.contains('Tasks');
         cy.get('.container-fluid').first().screenshot('loginSuccess')
     });

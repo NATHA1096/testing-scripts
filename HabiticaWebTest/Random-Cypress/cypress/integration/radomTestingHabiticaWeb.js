@@ -72,7 +72,7 @@ function randomTest(monkeysLeft) {
         var randomButton = $bottons.get(getRandomInt(0, $bottons.length));
         if(!Cypress.dom.isHidden(randomButton)) {
           cy.log("buttonClickNotHidden")
-          cy.wrap(randomButton).click();   
+          cy.wrap(randomButton).click({force: true});   
           monkeysLeft = monkeysLeft - 1;                    
         }       
         cy.wait(1000);    

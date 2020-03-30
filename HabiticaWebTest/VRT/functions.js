@@ -13,8 +13,10 @@ module.exports = {
 		};
 		
 		var diff = resemble(imageChrome).compareTo(imageFirefox).ignoreLess().onComplete(function(data){
-            fs.writeFileSync(resultPath, data.getBuffer());
-			console.log(data);
+			if (data.misMatchPercentage > 0) {
+				fs.writeFileSync(resultPath, data.getBuffer());
+				console.log(data);
+			}			
 		});
 		
 		return diff;
