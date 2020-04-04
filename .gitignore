@@ -1,2 +1,5 @@
 HabiticaWebTest/E2E-Cypress/node_modules
 HabiticaWebTest/VRT/node_modules
+HabiticaWebTest/E2E-Cypress/cypress/screenshots
+HabiticaWebTest/E2E-Cypress/cypress/videos
+HabiticaWebTest/BDD-Cucumber/node_modules

@@ -19,6 +19,7 @@ describe('Habitica web login', () => {
         cy.get('#usernameInput').click().type('cuentafalsa@nada.com');
         cy.get('#passwordInput').click().type('password');
         cy.get('#login-form').find('button[type="submit"]').click();
+        cy.wait(1000)
         cy.get('.error[data-v-7d0d32a2]').should('be.visible');
         cy.get('.form-wrapper').first().screenshot('loginGenericError');
     });
@@ -27,6 +28,7 @@ describe('Habitica web login', () => {
         // Llenar form con datos de login
         cy.get('#passwordInput').click().type('password');
         cy.get('#login-form').find('button[type="submit"]').click();
+        cy.wait(1000)
         cy.contains(missingUsername);
         cy.get('.form-wrapper').first().screenshot('loginUsernameMissing')
     });
@@ -35,6 +37,7 @@ describe('Habitica web login', () => {
         // Llenar form con datos de login
         cy.get('#usernameInput').click().type('cuentafalsa@nada.com');
         cy.get('#login-form').find('button[type="submit"]').click();
+        cy.wait(1000)
         cy.contains(missingPassword);
         cy.get('.form-wrapper').first().screenshot('LoginPasswordMissing');
     });
