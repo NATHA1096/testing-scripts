@@ -13,23 +13,27 @@ describe('Habitica Web - Register', function() {
         cy.screenshot('errorUsername')
     });
     
-    it('Register with a password less than 8 characters', ()=> {
+    it('Register with a password less than 8 characters', () => {
         cy.visit('https://habitica.com');
-        cy.get('.form').find('input[id="usernameInput"]').click().type("test_habitica_web30")
-        cy.get('.form').find('input[type="email"]').click().type("test_exitosa1@example.com")
-        cy.get('.form').find('input[type="password"]').first().click().type("12345")
-        cy.get('.form').find('input[type="password"]').last().click().type("12345")
-        cy.contains(passwordCharacters);
-        cy.screenshot('errorPassword')
+        cy.request('https://my.api.mockaroo.com/habiticacreateuser.json?key=42393010').then((response) => {
+            cy.get('.form').find('input[id="usernameInput"]').click().type(response.body.user)
+            cy.get('.form').find('input[type="email"]').click().type(response.body.email)
+            cy.get('.form').find('input[type="password"]').first().click().type("12345")
+            cy.get('.form').find('input[type="password"]').last().click().type("12345")
+            cy.contains(passwordCharacters);
+            cy.screenshot('errorPassword')
+        })
     });
     
-    it("Register with two passwords which don't match", ()=> {
+    it("Register with two passwords which don't match", () => {
         cy.visit('https://habitica.com');
-        cy.get('.form').find('input[id="usernameInput"]').click().type("test_habitica_web30")
-        cy.get('.form').find('input[type="email"]').click().type("test_exitosa1@example.com")
-        cy.get('.form').find('input[type="password"]').first().click().type("12345678")
-        cy.get('.form').find('input[type="password"]').last().click().type("123456")
-        cy.contains(passwordMatch);
+        cy.request('https://my.api.mockaroo.com/habiticacreateuser.json?key=42393010').then((response) => {
+            cy.get('.form').find('input[id="usernameInput"]').click().type(response.body.user)
+            cy.get('.form').find('input[type="email"]').click().type(response.body.email)
+            cy.get('.form').find('input[type="password"]').first().click().type(response.body.password)
+            cy.get('.form').find('input[type="password"]').last().click().type("password")
+            cy.contains(passwordMatch);
+        })
         cy.screenshot('errorPasswordMatch')
     });    
 
@@ -37,11 +41,13 @@ describe('Habitica Web - Register', function() {
 
     it('Register, create avatar and add interest', function() {
         cy.visit('https://habitica.com');
-        cy.get('.form').find('input[id="usernameInput"]').click().type("test_habitica_web38")
-        cy.get('.form').find('input[type="email"]').click().type("test_exitosa38@example.com")
-        cy.get('.form').find('input[type="password"]').first().click().type("PruebaExitosa.01")
-        cy.get('.form').find('input[type="password"]').last().click().type("PruebaExitosa.01")
-        cy.get('.form').contains('Sign Up').click({force: true})
+        cy.request('https://my.api.mockaroo.com/habiticacreateuser.json?key=42393010').then((response) => {
+            cy.get('.form').find('input[id="usernameInput"]').click().type(response.body.user)
+            cy.get('.form').find('input[type="email"]').click().type(response.body.email)
+            cy.get('.form').find('input[type="password"]').first().click().type(response.body.password)
+            cy.get('.form').find('input[type="password"]').last().click().type(response.body.password)
+            cy.get('.form').contains('Sign Up').click({ force: true })
+        })
         cy.wait(3000);
         cy.screenshot('register')
         cy.contains('Get Started!').click()
