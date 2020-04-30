@@ -21,9 +21,3 @@ Scenario: Allowed to edit party when changing the description
     When I try to edit it
     And I write any description like
     Then I expect to see the description added to the party
-
-    Examples:
-      | description         | 
-      | sfsdfdsvscsdvdsvsd  |
-      | Description test    |
-      | ***                 |

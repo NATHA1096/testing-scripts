@@ -10,7 +10,7 @@ describe('Habitica Web - Register', function() {
         cy.visit('https://habitica.com');
         cy.get('.form').find('input[id="usernameInput"]').click().type("test_habitica_web1")
         cy.contains(usernameAlreadyTaken);
-        cy.screenshot('errorUsername')
+        cy.get('#app').first().screenshot('errorUsername')
     });
     
     it('Register with a password less than 8 characters', () => {
@@ -21,7 +21,7 @@ describe('Habitica Web - Register', function() {
             cy.get('.form').find('input[type="password"]').first().click().type("12345")
             cy.get('.form').find('input[type="password"]').last().click().type("12345")
             cy.contains(passwordCharacters);
-            cy.screenshot('errorPassword')
+            cy.get('#app').first().screenshot('errorPassword')
         })
     });
     
@@ -34,7 +34,7 @@ describe('Habitica Web - Register', function() {
             cy.get('.form').find('input[type="password"]').last().click().type("password")
             cy.contains(passwordMatch);
         })
-        cy.screenshot('errorPasswordMatch')
+        cy.get('#app').first().screenshot('errorPasswordMatch')
     });    
 
     /* Prueba exitosa */
