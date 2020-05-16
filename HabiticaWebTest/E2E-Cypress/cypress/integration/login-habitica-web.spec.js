@@ -16,8 +16,10 @@ describe('Habitica web login', () => {
 
     it('Visits habitica and login fails', ()=> {
         // Llenar form con datos de login
-        cy.get('#usernameInput').click().type('cuentafalsa@nada.com');
-        cy.get('#passwordInput').click().type('password');
+        cy.request('https://my.api.mockaroo.com/habiticacreateuser.json?key=42393010').then((response) => {
+            cy.get('#usernameInput').click().type(response.body.email);
+            cy.get('#passwordInput').click().type(response.body.password);
+        })
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.wait(1000)
         cy.get('.error[data-v-7d0d32a2]').should('be.visible');
@@ -26,7 +28,9 @@ describe('Habitica web login', () => {
 
     it('Complete form without username. Username missing', ()=> {
         // Llenar form con datos de login
-        cy.get('#passwordInput').click().type('password');
+        cy.request('https://my.api.mockaroo.com/habiticacreateuser.json?key=42393010').then((response) => {
+            cy.get('#passwordInput').click().type(response.body.password);
+        })
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.wait(1000)
         cy.contains(missingUsername);
@@ -35,7 +39,9 @@ describe('Habitica web login', () => {
     
     it('Complete form without password. Password missing', ()=> {
         // Llenar form con datos de login
-        cy.get('#usernameInput').click().type('cuentafalsa@nada.com');
+        cy.request('https://my.api.mockaroo.com/habiticacreateuser.json?key=42393010').then((response) => {
+            cy.get('#usernameInput').click().type(response.body.email);
+        })
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.wait(1000)
         cy.contains(missingPassword);

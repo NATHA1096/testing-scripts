@@ -9,7 +9,7 @@ describe('Habitica Web - Create Party)', function() {
         cy.wait(3000)
         cy.get('#create-party-modal___BV_modal_content_').first().screenshot('modalParty')
         cy.get('#create-party-modal___BV_modal_header_').contains('Create a Party').click()
-        cy.wait(2000)
+        cy.wait(3000)
         cy.get('#app-header').contains('Invite Friends')
         cy.get('#app').first().screenshot('partyCreated')
     });
@@ -22,13 +22,15 @@ describe('Habitica Web - Create Party)', function() {
         cy.get('form').find('button[disabled="disabled"]')
     });
 
-    it('Edit Party successfully', function() {        
-        cy.get('input[type="text"]').click().type('Editing party name')
-        cy.get('textarea[type="text"]').click().type('any description')
-        cy.get('form').contains('Update Party').click()
-        cy.wait(1000)
-        cy.get('.sticky').contains('Editing party name')
-        cy.get('.sticky').contains('any description')
+    it('Edit Party successfully', function() {
+        cy.request('https://my.api.mockaroo.com/habiticaeditparty.json?key=38f58a20').then((response) => {
+            cy.get('input[type="text"]').click().type(response.body.name)
+            cy.get('textarea[type="text"]').click().type(response.body.desciption)
+            cy.get('form').contains('Update Party').click()
+            cy.wait(1000)
+            cy.get('.sticky').contains(response.body.name)
+            cy.get('.sticky').contains(response.body.desciption)
+        })
     });
 
     it('Delete the party created', function() {

@@ -39,11 +39,12 @@ describe('Habitica Web - Party Members)', function() {
         cy.get('#passwordInput').click().type('Cypress123*');
         cy.get('#login-form').find('button[type="submit"]').click();
         cy.wait(4000)
-        
-        cy.get('.chat-row').find('textarea').click().type('any message')
-        cy.get('.chat-actions').contains('Send').click()
-        cy.wait(3000)
-        cy.get('.card').contains('any message')
+        cy.request('https://my.api.mockaroo.com/habiticaeditparty.json?key=38f58a20').then((response) => {
+            cy.get('.chat-row').find('textarea').click().type(response.body.desciption)
+            cy.get('.chat-actions').contains('Send').click()
+            cy.wait(3000)
+            cy.get('.card').contains(response.body.desciption)
+        })
         cy.get('#app').first().screenshot('messagedAdded')
     });
 
@@ -51,7 +52,9 @@ describe('Habitica Web - Party Members)', function() {
         cy.get('#app-header').contains('Invite Friends').click()    
         cy.wait(2000)
         cy.get('#invite-modal___BV_modal_content_').first().screenshot('modalInvite')
-        cy.get('.input-group').first().click().type('a')
+        cy.request('https://my.api.mockaroo.com/habiticaeditparty.json?key=38f58a20').then((response) => {
+            cy.get('.input-group').first().click().type(response.body.name)
+        })
         cy.wait(1000)
         cy.get('#invite-modal___BV_modal_body_').contains(userNotFound)
         cy.get('#invite-modal___BV_modal_content_').first().screenshot('modalInviteErrorUser')
