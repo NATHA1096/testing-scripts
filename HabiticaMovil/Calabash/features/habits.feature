@@ -16,7 +16,7 @@ Feature: Crear editar y borrar habitos
     And I press "Weekly"
     Then I wait
     And I press "Create"
-    Then I wait
+    Then I wait to see "Ejercicio 2 horas"
     Then I should see "Ejercicio 2 horas"
     Then I wait
     

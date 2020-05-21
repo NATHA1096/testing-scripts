@@ -11,9 +11,13 @@ Feature: Cambio de lenguaje
     And I wait
     And I click on screen 70% from the left and 10% from the top
     And I press "Language"
+    And I wait
     And I press "Español"
     And I click on screen 5% from the left and 10% from the top
     And I wait
+    And I click on screen 5% from the left and 10% from the top
+    And I wait
     Then I should not see "Achievements"
+    And I wait
 
 
