@@ -11,54 +11,56 @@ describe('Habitica añadir tareas', function() {
 	  cy.wait(2000)
       cy.get('button').contains('Login').click()
 	  cy.wait(5000)
-	  cy
-		.get('textarea')
-		.each(($el, index, $list) => {
-			cy.log("1: "+ $el.placeholder)
-			
-			switch (index) {
-				case 0:
-				cy.wrap($el).click({force: true}).type("Leer 30 min", {force: true})
-				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
-				cy.get('#app').screenshot('agregarHabito')
-				break;
-				case 1:
-				cy.wrap($el).click({force: true}).type("Desayunar 7AM", {force: true})
-				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
-				cy.get('#app').screenshot('agregarDiaria')
-				break;
-				case 2:
-				cy.wrap($el).click({force: true}).type("Hacer aseo", {force: true})
-				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
-				cy.get('#app').screenshot('agregarPendiente')
-				break;
-				case 3:
-				cy.wrap($el).click({force: true}).type("Tomar un par de cervezas", {force: true})
-				cy.wrap($el).click({force: true}).type('{enter}', {force: true})
-				cy.get('#app').screenshot('agregarRecompensa')
-				break;
-				default:
-				break;
-			}
-	})
-	buscarYeditarTarea('Leer 30 min','Leer 60 min')
-	buscarYeditarTarea('Desayunar 7AM','Desayunar 9AM')
-	buscarYeditarTarea('Hacer aseo','Cocinar')
-	buscarYeditarTarea('Tomar un par de cervezas','Comer helado de chocolate')
+	  cy.request('https://my.api.mockaroo.com/habiticacreatetasks.json?key=38f58a20').then((response) => {
+          cy
+            .get('textarea')
+            .each(($el, index, $list) => {
+                cy.log("1: "+ $el.placeholder)
 
-	eliminarTarea('Leer 60 min')
-    eliminarTarea('Desayunar 9AM')
-    eliminarTarea('Cocinar')
-    eliminarTarea('Comer helado de chocolate')
+                switch (index) {
+                    case 0:
+                    cy.wrap($el).click({force: true}).type(response.body.habito, {force: true})
+                    cy.wrap($el).click({force: true}).type('{enter}', {force: true})
+                    cy.get('#app').screenshot('agregarHabito')
+                    break;
+                    case 1:
+                    cy.wrap($el).click({force: true}).type(response.body.diaria, {force: true})
+                    cy.wrap($el).click({force: true}).type('{enter}', {force: true})
+                    cy.get('#app').screenshot('agregarDiaria')
+                    break;
+                    case 2:
+                    cy.wrap($el).click({force: true}).type(response.body.pendiente, {force: true})
+                    cy.wrap($el).click({force: true}).type('{enter}', {force: true})
+                    cy.get('#app').screenshot('agregarPendiente')
+                    break;
+                    case 3:
+                    cy.wrap($el).click({force: true}).type(response.body.recompensa, {force: true})
+                    cy.wrap($el).click({force: true}).type('{enter}', {force: true})
+                    cy.get('#app').screenshot('agregarRecompensa')
+                    break;
+                    default:
+                    break;
+                }
+        })
+        buscarYeditarTarea(response.body.habito,response.body.habito2,false)
+        buscarYeditarTarea(response.body.diaria,response.body.diaria2,false)
+        buscarYeditarTarea(response.body.pendiente,response.body.pendiente2,false)
+        buscarYeditarTarea(response.body.recompensa,response.body.recompensa2,true)
+
+        eliminarTarea(response.body.habito2)
+        eliminarTarea(response.body.diaria2)
+        eliminarTarea(response.body.pendiente2)
+        eliminarTarea(response.body.recompensa2)
+      })
     })
 })
 
-function buscarYeditarTarea(titulo, nuevoTitulo) {
+function buscarYeditarTarea(titulo, nuevoTitulo, esRecompensa) {
 	cy.get('input').eq(0).click({force: true}).type(titulo, {force: true})
 	cy.wait(2000)
-	cy.screenshot('buscar'+titulo)
+	cy.get('#app').screenshot('buscar'+titulo)
 	cy.contains(titulo).click({force: true})
-	if(titulo != 'Tomar un par de cervezas'){
+	if(!esRecompensa){
 		cy.wait(2000)		
 		cy.contains('Medium').click({force: true})
 		cy.get('.modal').screenshot('modal'+titulo);
