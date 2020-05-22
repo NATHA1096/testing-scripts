@@ -35,19 +35,20 @@ Scenario: Validar longitud minima del password
     And I enter text "12345" into field with id "password"
     And I enter text "12345" into field with id "confirm_password"
     And I press "Register"
-    Then I should see "Your password has to be at least 8 characters long"
+    Then I should see "Password must be 8 characters or more"
     And I press "OK" 
 Scenario: Registro exitoso
     When I press "Skip"
     And I press "Register"
-    And I enter text "jmauricio01234567" into field with id "username"
-    And I enter text "jmauricio@mOaail.com" into field with id "email"
-    And I enter text "1234567A@" into field with id "password"
-    And I enter text "1234567A@" into field with id "confirm_password"
+    Then I fill fields to create an user
     And I press "Register"
     And I press "Next"
+    And I wait
     And I press "Next"
-    Then I should see "LET'S START!"
-    And I press "LET'S START!"
+    And I wait
+    Then I should see "Let\'s start!"
+    And I wait
+    And I press "Let\'s start!"
+    And I wait
 
 
