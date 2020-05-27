@@ -20,7 +20,8 @@ Feature: Crear editar y borrar tareas diarias
     Then I wait
     
   Scenario: Editar Tarea diaria
-    When I press "Montar bicicleta"
+    Given I wait to see "Montar bicicleta"
+    And I press "Montar bicicleta"
     And I clear input field with id "text_edit_text"
     And I enter text "Trotar" into field with id "text_edit_text"
     Then I wait
@@ -31,7 +32,8 @@ Feature: Crear editar y borrar tareas diarias
     Then I wait
 
   Scenario: Borrar tarea diaria
-    When I press "Dailies"
+    Given I wait to see "Dailies"
+    And I press "Dailies"
     And I wait
     And I wait to see "Montar bicicleta"
     Then I wait

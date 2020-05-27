@@ -17,12 +17,12 @@ Feature: Crear editar y borrar recompensas
     And I click on screen 10% from the left and 50% from the top
     Then I wait
     And I press "Create"
-    Then I wait
+    Then I wait to see "Tiquetes a miami"
     Then I should see "Tiquetes a miami"
     Then I wait
     
   Scenario: Editar recompensa
-    When I press "Rewards"
+    Given I press "Rewards"
     Then I wait
     And I wait to see "Tiquetes a miami"
     And I press "Tiquetes a miami" 
@@ -38,7 +38,7 @@ Feature: Crear editar y borrar recompensas
     Then I wait
 
   Scenario: Borrar recompensa
-    When I press "Rewards"
+    Given I press "Rewards"
     And I wait
     And I wait to see "Tiquetes a Bogotá"
     Then I wait

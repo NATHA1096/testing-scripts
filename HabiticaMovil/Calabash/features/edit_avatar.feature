@@ -24,6 +24,8 @@ Feature: Editar avatar
     When I click on screen 5% from the left and 10% from the top
     Then I wait
     And I press "Avatar"
+    And I wait
+    Then I scroll "down" until I see "Color"
     Then I wait
     And I press "Color"
     Then I wait

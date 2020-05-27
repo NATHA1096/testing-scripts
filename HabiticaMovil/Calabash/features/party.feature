@@ -17,22 +17,8 @@ Feature: Party
     And I enter text "Descripcion de mi equipo" into field with id "group_description_edittext"
     And I press "Create"
     Then I wait
-    
     Then I should see "Mi equipo"
     
-
-  Scenario: Crea una nueva mision para el equipo
-    When I click on screen 5% from the left and 10% from the top
-    Then I wait
-    And I press "Party"
-    And I wait
-    When I press "Start a new Quest"
-    And I wait
-    And I click on screen 50% from the left and 50% from the top
-    When I press "Invite party"
-    Then I wait
-    Then I should see "Quest"
-    Then I wait
 
   Scenario: Enviar mensaje al grupo
     When I click on screen 5% from the left and 10% from the top
@@ -45,6 +31,21 @@ Feature: Party
     And I click on screen 97% from the left and 98% from the top
     Then I wait
     Then I should see "Enviando mensaje al grupo"
+    Then I wait
+
+  Scenario: Editar equipo
+    When I click on screen 5% from the left and 10% from the top
+    Then I wait
+    And I press "Party"
+    And I wait
+    When I press the menu key
+    And I press "Edit"
+    Then I wait 
+    And I enter text "nuevo equipo" into field with id "group_name_edittext"
+    And I enter text "nueva descripcion" into field with id "group_description_edittext"
+    And I press "Save"
+    Then I wait 
+    Then I should see "nuevo equipo"   
     Then I wait
 
   Scenario: Invitar amigos
@@ -60,4 +61,17 @@ Feature: Party
     And I press "INVITE FRIENDS"
     Then I wait 
     Then I should see "Invite sent!"   
+    Then I wait
+
+  Scenario: Abandonar equipo
+    When I click on screen 5% from the left and 10% from the top
+    Then I wait
+    And I press "Party"
+    And I wait
+    When I press the menu key
+    And I press "Leave"
+    Then I wait 
+    And I press "Yes"
+    Then I wait 
+    Then I should see "Habits"   
     Then I wait
