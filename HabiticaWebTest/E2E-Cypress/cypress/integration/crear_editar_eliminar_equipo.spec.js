@@ -6,7 +6,7 @@ describe('Habitica Web - Create Party)', function() {
 
     it('Create a Party', function() {
         cy.get('#menu_collapse').contains('Party').click({force: true})
-        cy.wait(3000)
+        cy.wait(5000)
         cy.get('#create-party-modal___BV_modal_content_').first().screenshot('modalParty')
         cy.get('#create-party-modal___BV_modal_header_').contains('Create a Party').click()
         cy.wait(3000)
@@ -31,6 +31,19 @@ describe('Habitica Web - Create Party)', function() {
             cy.get('.sticky').contains(response.body.name)
             cy.get('.sticky').contains(response.body.desciption)
         })
+    });
+
+    it('Start a quest(mision)', function() {
+        cy.get('.no-quest-section').contains('START A QUEST').click()
+        cy.wait(3000)
+        cy.get('#start-quest-modal').first().screenshot('modalMision')
+        cy.get('.modal-body').contains('Invite Party to Quest').click()
+        cy.wait(2000)
+        cy.get('#app').first().screenshot('misionCreada')
+    });
+
+    it('Abort the quest(mision)', function() {
+        cy.get('.quest-active-section').contains('Abort').click()
     });
 
     it('Delete the party created', function() {

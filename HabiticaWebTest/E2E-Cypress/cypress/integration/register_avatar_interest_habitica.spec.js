@@ -48,7 +48,7 @@ describe('Habitica Web - Register', function() {
             cy.get('.form').find('input[type="password"]').last().click().type(response.body.password)
             cy.get('.form').contains('Sign Up').click({ force: true })
         })
-        cy.wait(3000);
+        cy.wait(4000);
         cy.screenshot('register')
         cy.contains('Get Started!').click()
         var i,j;
